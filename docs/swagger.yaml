@@ -1,0 +1,223 @@
+basePath: /
+definitions:
+  models.Car:
+    properties:
+      id:
+        example: "12"
+        type: string
+      mark:
+        example: ""
+        type: string
+      model:
+        example: tesla
+        type: string
+      owner:
+        $ref: '#/definitions/models.People'
+      regNum:
+        example: ""
+        type: string
+      year:
+        example: ""
+        type: string
+    type: object
+  models.CarNumber:
+    properties:
+      regNum:
+        example:
+        - x15xx150
+        - x24xx134
+        items:
+          type: string
+        type: array
+    type: object
+  models.People:
+    properties:
+      id:
+        example: ""
+        type: string
+      name:
+        example: jamson
+        type: string
+      patronymic:
+        example: ""
+        type: string
+      surname:
+        example: ""
+        type: string
+    type: object
+  server.carShow:
+    properties:
+      id:
+        example: "12"
+        type: string
+      mark:
+        example: lada
+        type: string
+      model:
+        example: kalina
+        type: string
+      owner:
+        $ref: '#/definitions/server.peopleShow'
+      regNum:
+        example: x16xx150
+        type: string
+      year:
+        example: "2000"
+        type: string
+    type: object
+  server.peopleShow:
+    properties:
+      id:
+        example: "14"
+        type: string
+      name:
+        example: james
+        type: string
+      patronymic:
+        example: petrovich
+        type: string
+      surname:
+        example: johnson
+        type: string
+    type: object
+host: localhost:8888
+info:
+  contact:
+    email: soberkoder@gmail.com
+    name: API Support
+  description: This is a sample service for managing users
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: User API
+  version: "1.0"
+paths:
+  /delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete car and perso by car id
+      parameters:
+      - description: delete car by id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Invalid id supplied
+        "404":
+          description: Car not found
+      summary: Delete car and person by car id
+      tags:
+      - cars
+  /insert:
+    post:
+      consumes:
+      - application/json
+      description: Insert reg nums for car
+      parameters:
+      - description: Add reg nums
+        in: body
+        name: regNum
+        required: true
+        schema:
+          $ref: '#/definitions/models.CarNumber'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: successful operation
+      summary: Insert person and car
+      tags:
+      - cars
+  /show:
+    get:
+      consumes:
+      - application/json
+      description: Show cars and his owner
+      parameters:
+      - description: Sort records
+        in: query
+        name: sort
+        type: string
+      - description: Show max limit records
+        in: query
+        name: limit
+        type: integer
+      - description: Show records with current offset
+        in: query
+        name: offset
+        type: integer
+      - example: "12"
+        in: query
+        name: id
+        type: string
+      - example: lada
+        in: query
+        name: mark
+        type: string
+      - example: kalina
+        in: query
+        name: model
+        type: string
+      - example: x16xx150
+        in: query
+        name: regNum
+        type: string
+      - example: "2000"
+        in: query
+        name: year
+        type: string
+      - description: 'Example: Ivan'
+        in: query
+        name: name
+        type: string
+      - description: 'Example: Ivanov'
+        in: query
+        name: surname
+        type: string
+      - description: 'Example: Ivanovich'
+        in: query
+        name: patronymic
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/server.carShow'
+        "400":
+          description: Invalid parameters supplied
+        "404":
+          description: Cars not found
+      summary: Show cars and person
+      tags:
+      - cars
+  /update:
+    put:
+      consumes:
+      - application/json
+      description: Update cars and persons
+      parameters:
+      - description: Update cars
+        in: body
+        name: cars
+        required: true
+        schema:
+          $ref: '#/definitions/models.Car'
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Invalid parameters supplied
+        "404":
+          description: cars or peoples not found
+      summary: Update cars and persons
+      tags:
+      - cars
+swagger: "2.0"

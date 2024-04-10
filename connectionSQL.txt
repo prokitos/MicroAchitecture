@@ -1,0 +1,13 @@
+SELECT * FROM pg_stat_activity;
+
+SELECT sum(numbackends) FROM pg_stat_database;
+
+
+все нормально, но нет ответа response реконнекта.
+нет надписи что реконнект успешен.
+попробывать пробрасывать из execute response вместо bool !?
+
+https://donchev.is/post/working-with-postgresql-in-go-using-pgx/
+https://codingcatalog.com/database-connection-pooling-overview-and-benchmark-with-go/#how-to-config-the-connection-pool
+https://github.com/jackc/pgx 
+https://silentsokolov.github.io/simple-auto-reconnect-in-go
